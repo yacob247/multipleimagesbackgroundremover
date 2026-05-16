@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Meta Tags -->
-    <title>AutoRemove Batch Background Remover - Bulk Image Tool</title>
+    <title>AutoRemove Pro Batch Background Remover - Bulk Image Tool</title>
     <meta name="description" content="Free, 100% client-side batch background remover. Drag and drop multiple images to automatically strip backgrounds locally in your browser. No file uploads, completely private.">
     <meta name="keywords" content="batch background remover, multiple images background remover, bulk transparent png converter, remove background locally, bulk image background transparent, free background removal tool">
     <meta name="author" content="Envizion Work">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph for Social Sharing -->
-    <meta property="og:title" content="AutoRemove Batch Background Remover">
-    <meta property="og:description" content="Instantly remove backgrounds from multiple images at once. 100% private, local browser processing.">
+    <meta property="og:title" content="AutoRemove Pro Batch Background Remover">
+    <meta property="og:description" content="Instantly remove backgrounds from multiple images at once. 100% private, local browser processing with advanced editing features.">
     <meta property="og:type" content="website">
 
     <!-- Tailwind CSS for Styling -->
@@ -40,21 +40,29 @@
             width: 100%; text-align: center; overflow: hidden; display: flex; justify-content: center; align-items: center; 
             background-color: #f9fafb; border: 1px dashed #d1d5db; border-radius: 0.5rem; position: relative;
         }
+        
+        /* Custom Scrollbar for Settings */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 font-sans pb-12 min-h-screen">
 
     <!-- Header -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-20 p-4 shadow-sm">
-        <div class="max-w-6xl mx-auto flex items-center justify-between">
-            <h1 class="font-bold text-xl tracking-tight text-blue-600">AutoRemove Batch</h1>
-            <span class="text-xs font-semibold bg-gray-100 text-gray-600 px-2 py-1 rounded-full uppercase tracking-wider" title="Your images never leave your computer">
-                100% Client-Side
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30 p-4 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <h1 class="font-bold text-xl tracking-tight text-blue-600 flex items-center gap-2">
+                AutoRemove Pro <span class="bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full tracking-widest uppercase">Batch</span>
+            </h1>
+            <span class="text-xs font-semibold bg-green-100 text-green-700 px-3 py-1.5 rounded-full uppercase tracking-wider" title="Your images never leave your computer">
+                🔒 100% Local Privacy
             </span>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto p-4 py-8">
+    <main class="max-w-7xl mx-auto p-4 py-8">
         
         <!-- Ad Banner 1 (Slot: 3561821198) -->
         <div class="mb-8 ad-container min-h-[100px]">
@@ -71,82 +79,181 @@
         </div>
 
         <!-- Initial Upload Area -->
-        <div id="upload-container" class="border-2 border-dashed border-gray-300 rounded-3xl p-16 flex flex-col items-center justify-center bg-white cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Free Batch Background Remover</h2>
-            <p class="text-gray-500 text-center mb-6 max-w-md">
-                Drag and drop multiple images here, or click to browse. We automatically process bulk images locally in your browser.
+        <div id="upload-container" class="border-2 border-dashed border-gray-300 rounded-3xl p-16 flex flex-col items-center justify-center bg-white cursor-pointer hover:bg-gray-50 transition-colors shadow-sm min-h-[400px]">
+            <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6">
+                <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-3">Drop Multiple Images Here</h2>
+            <p class="text-gray-500 text-center mb-8 max-w-md text-lg">
+                Instantly remove backgrounds, add drop shadows, resize, and convert to JPG/PNG natively in your browser.
             </p>
-            <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3 rounded-full transition-colors shadow-sm">Select Images to Process</button>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3.5 rounded-full transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200">
+                Select Files to Process
+            </button>
             <input type="file" multiple accept="image/*" id="file-input" class="hidden">
         </div>
 
         <!-- Working Area -->
         <div id="workspace" class="hidden space-y-6">
-            <!-- Controls Toolbar -->
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
-                <div class="flex flex-col md:flex-row gap-6 w-full md:w-auto flex-1">
-                    
-                    <!-- Tolerance Control -->
-                    <div class="flex-1 max-w-xs">
-                        <div class="flex justify-between mb-1.5">
-                            <label class="font-medium text-sm text-gray-700">Edge Tolerance</label>
-                            <span id="tolerance-val" class="text-sm border-gray-200 border bg-gray-50 px-1 rounded text-gray-600">10%</span>
+            
+            <!-- Master Control Panel -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                
+                <!-- Primary Controls -->
+                <div class="p-5 border-b border-gray-100 flex flex-wrap gap-6 items-center justify-between bg-gray-50/50">
+                    <div class="flex flex-wrap gap-8 flex-1">
+                        <!-- Tolerance Control -->
+                        <div class="w-full max-w-[200px]">
+                            <div class="flex justify-between mb-2">
+                                <label class="font-semibold text-sm text-gray-700">Edge Tolerance</label>
+                                <span id="tolerance-val" class="text-xs font-mono bg-white border border-gray-200 px-1.5 py-0.5 rounded text-blue-600">10%</span>
+                            </div>
+                            <input type="range" id="tolerance-slider" min="0" max="100" value="10" class="w-full accent-blue-600 h-1.5 bg-gray-200 rounded-lg cursor-pointer">
                         </div>
-                        <input type="range" id="tolerance-slider" min="0" max="100" value="10" class="w-full accent-blue-600 h-2 bg-gray-200 rounded-lg cursor-pointer">
-                    </div>
-                    
-                    <!-- Feathering Control -->
-                    <div class="flex-1 max-w-xs">
-                        <div class="flex justify-between mb-1.5">
-                            <label class="font-medium text-sm text-gray-700">Feathering (Smoothing)</label>
-                            <span id="feather-val" class="text-sm border-gray-200 border bg-gray-50 px-1 rounded text-gray-600">2px</span>
+                        
+                        <!-- Feathering Control -->
+                        <div class="w-full max-w-[200px]">
+                            <div class="flex justify-between mb-2">
+                                <label class="font-semibold text-sm text-gray-700">Feathering</label>
+                                <span id="feather-val" class="text-xs font-mono bg-white border border-gray-200 px-1.5 py-0.5 rounded text-blue-600">2px</span>
+                            </div>
+                            <input type="range" id="feather-slider" min="0" max="10" value="2" class="w-full h-1.5 bg-gray-200 rounded-lg cursor-pointer accent-blue-600">
                         </div>
-                        <input type="range" id="feather-slider" min="0" max="10" value="2" class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-blue-600">
                     </div>
 
+                    <!-- Action Buttons -->
+                    <div class="flex items-center gap-3">
+                        <button id="clear-btn" class="px-4 py-2 font-medium text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-transparent">Clear All</button>
+                        <button id="download-zip-btn" class="bg-gray-900 hover:bg-gray-800 disabled:opacity-50 text-white font-semibold px-6 py-2.5 rounded-lg flex items-center gap-2 transition-colors shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Download ZIP
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="flex items-center gap-3 w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 border-gray-100">
-                    <button id="clear-btn" class="px-4 py-2 font-medium text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-transparent hover:border-red-100">Clear All</button>
-                    <button id="download-zip-btn" class="bg-gray-900 hover:bg-gray-800 disabled:opacity-50 text-white font-medium px-5 py-2.5 rounded-lg flex items-center gap-2 transition-colors shadow-sm">Zip & Download</button>
+                <!-- Advanced Settings (Secondary Toolbar) -->
+                <div class="p-5 flex flex-wrap gap-6 items-end bg-white">
+                    
+                    <!-- Background Color -->
+                    <div class="space-y-2">
+                        <label class="block font-semibold text-sm text-gray-700">Background</label>
+                        <div class="flex gap-2">
+                            <button class="bg-btn bg-checkerboard w-8 h-8 rounded border border-gray-300 ring-2 ring-blue-500 ring-offset-1" data-bg="transparent" title="Transparent"></button>
+                            <button class="bg-btn bg-white w-8 h-8 rounded border border-gray-300 hover:ring-2 ring-blue-500 ring-offset-1 transition-all" data-bg="#ffffff" title="Solid White"></button>
+                            <button class="bg-btn bg-black w-8 h-8 rounded border border-gray-300 hover:ring-2 ring-blue-500 ring-offset-1 transition-all" data-bg="#000000" title="Solid Black"></button>
+                            <div class="relative w-8 h-8 rounded border border-gray-300 overflow-hidden group">
+                                <div class="absolute inset-0 flex items-center justify-center text-xs pointer-events-none z-10 font-bold mix-blend-difference text-white">#</div>
+                                <input type="color" id="custom-bg-color" value="#3b82f6" class="absolute -top-2 -left-2 w-16 h-16 cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-px h-10 bg-gray-200 mx-2 hidden md:block"></div>
+
+                    <!-- Drop Shadow -->
+                    <div class="space-y-2">
+                        <label class="block font-semibold text-sm text-gray-700 flex items-center gap-2">
+                            <input type="checkbox" id="shadow-toggle" class="rounded text-blue-600 focus:ring-blue-500"> Drop Shadow
+                        </label>
+                        <input type="range" id="shadow-slider" min="1" max="30" value="15" class="w-32 h-1.5 bg-gray-200 rounded-lg cursor-pointer accent-blue-600 opacity-50" disabled>
+                    </div>
+
+                    <div class="w-px h-10 bg-gray-200 mx-2 hidden md:block"></div>
+
+                    <!-- Output Format -->
+                    <div class="space-y-2">
+                        <label class="block font-semibold text-sm text-gray-700">Format</label>
+                        <select id="format-select" class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 py-1.5 bg-gray-50">
+                            <option value="png">PNG (Transparent)</option>
+                            <option value="jpeg">JPEG (Smaller File)</option>
+                        </select>
+                    </div>
+
+                    <!-- JPEG Quality (Hidden by default) -->
+                    <div class="space-y-2 hidden" id="quality-container">
+                        <label class="block font-semibold text-sm text-gray-700">Quality (<span id="quality-val">90%</span>)</label>
+                        <input type="range" id="quality-slider" min="10" max="100" value="90" class="w-24 h-1.5 bg-gray-200 rounded-lg cursor-pointer accent-blue-600">
+                    </div>
+
+                    <div class="w-px h-10 bg-gray-200 mx-2 hidden lg:block"></div>
+
+                    <!-- Sizing -->
+                    <div class="space-y-2">
+                        <label class="block font-semibold text-sm text-gray-700">Output Size</label>
+                        <select id="size-select" class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 py-1.5 bg-gray-50">
+                            <option value="original">Original Size</option>
+                            <option value="1080">1080x1080 (Square)</option>
+                            <option value="800">800x800 (Square)</option>
+                        </select>
+                    </div>
+
+                    <!-- File Renaming -->
+                    <div class="space-y-2 flex-1 min-w-[150px]">
+                        <label class="block font-semibold text-sm text-gray-700">File Prefix</label>
+                        <input type="text" id="file-prefix" placeholder="e.g. Product_" value="" class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 py-1.5 bg-gray-50">
+                    </div>
+
                 </div>
             </div>
 
+            <!-- Global Progress Bar -->
+            <div id="progress-container" class="hidden w-full bg-gray-200 rounded-full h-2.5 mb-4 overflow-hidden">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
+            </div>
+
             <!-- Image Grid -->
-            <div id="image-grid" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-5">
+            <div id="image-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
                 <!-- Javascript will inject images here -->
                 
                 <!-- Add More Card -->
-                <label id="add-more-card" class="border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center text-gray-400 hover:text-blue-500 hover:border-blue-300 hover:bg-blue-50 transition-colors cursor-pointer aspect-square bg-gray-50/50 min-h-[160px]">
-                    <span class="text-xs font-semibold">+ Add More</span>
+                <label id="add-more-card" class="border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center text-gray-400 hover:text-blue-500 hover:border-blue-300 hover:bg-blue-50 transition-colors cursor-pointer aspect-square bg-white min-h-[160px] shadow-sm">
+                    <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span class="text-sm font-semibold">Add More</span>
                     <input type="file" multiple accept="image/*" id="add-more-input" class="hidden">
                 </label>
             </div>
         </div>
 
+        <!-- Comparison Modal -->
+        <div id="compare-modal" class="hidden fixed inset-0 z-50 bg-gray-900/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
+            <div class="bg-white rounded-2xl w-full max-w-5xl overflow-hidden relative flex flex-col shadow-2xl transform scale-95 transition-transform duration-300" id="compare-modal-content">
+                 <div class="p-4 border-b flex justify-between items-center bg-gray-50">
+                     <h3 class="font-bold text-lg text-gray-800">Compare Result</h3>
+                     <button id="close-modal-btn" class="text-gray-500 hover:text-gray-800 bg-gray-200 hover:bg-gray-300 rounded-full w-8 h-8 flex items-center justify-center transition-colors">&times;</button>
+                 </div>
+                 <div class="relative w-full h-[60vh] bg-checkerboard overflow-hidden select-none" id="compare-container">
+                     <img id="compare-original" class="absolute inset-0 w-full h-full object-contain pointer-events-none" alt="Original">
+                     <img id="compare-processed" class="absolute inset-0 w-full h-full object-contain pointer-events-none" style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%);" alt="Processed">
+                     
+                     <!-- Custom Slider UI -->
+                     <div id="compare-line" class="absolute top-0 bottom-0 w-1 bg-blue-500 left-[50%] z-10 shadow-[0_0_10px_rgba(0,0,0,0.5)] pointer-events-none flex flex-col justify-center items-center -ml-0.5">
+                         <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center shadow-lg text-white">
+                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                         </div>
+                     </div>
+                     <input type="range" id="compare-slider" min="0" max="100" value="50" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20">
+                 </div>
+            </div>
+        </div>
+
         <!-- SEO Rich Content Section -->
-        <article class="mt-16 bg-white rounded-3xl p-8 shadow-sm border border-gray-100 max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">The Fastest Multiple Images Background Remover</h2>
+        <article class="mt-20 bg-white rounded-3xl p-8 shadow-sm border border-gray-100 max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Advanced Bulk Image Processing Tool</h2>
             
             <div class="space-y-6 text-gray-600 leading-relaxed">
                 <section>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-2">How to Process Bulk Images</h3>
-                    <p>Removing backgrounds from dozens of photos doesn't have to take hours. With our batch background remover, you simply highlight all your files, drag them into the upload zone, and watch the tool automatically convert them into transparent PNGs. Use the tolerance sliders to adjust how aggressively the background is removed, and the feathering tool to smooth out rough pixel edges on bulk jobs.</p>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">How Our Architecture Works</h3>
+                    <p>Removing backgrounds from dozens of high-resolution photos usually freezes web browsers. Our tool utilizes <strong>Web Worker Multithreading</strong>, meaning the complex mathematical pixel-parsing (flood-fill edge detection) is offloaded to a background thread. This keeps your user interface snappy and responsive, even when processing massive image batches.</p>
                 </section>
 
                 <section>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-2">100% Secure & Client-Side Local Processing</h3>
-                    <p>Unlike other cloud-based tools that force you to upload sensitive product photos or personal images to their servers, our tool works completely locally inside your browser. No images are ever uploaded, ensuring strict data privacy and allowing you to remove backgrounds from multiple images instantly without waiting for slow internet upload speeds.</p>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Non-Destructive Rendering Pipeline</h3>
+                    <p>We use a two-phase engine. Phase 1 extracts the Alpha Channel (transparency). Phase 2 renders the visuals. This means you can adjust background colors, add drop shadows, or change the export formats instantly without having to wait for the algorithm to re-calculate the transparency cutout over and over.</p>
                 </section>
 
                 <section>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Frequently Asked Questions</h3>
-                    <ul class="space-y-3">
-                        <li><strong>How many images can I process at once?</strong> You can upload as many images as your computer's memory can handle. For best performance, we recommend batch processing 20-50 images at a time.</li>
-                        <li><strong>How do I download the results?</strong> Once processing finishes, simply click "Zip & Download" to get a single compressed file containing all your new transparent PNG graphics.</li>
-                        <li><strong>What if the tool removes the wrong part of the image?</strong> Click exactly on the color or area of the original background you want to remove. The algorithm will target that specific pixel color as the seed point for the entire batch.</li>
-                    </ul>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">100% Secure & Local Processing</h3>
+                    <p>Unlike cloud-based competitors, our tool works completely locally inside your browser using HTML5 Canvas. No images are ever uploaded to an external server. This guarantees absolute data privacy for confidential product shoots and bypasses all upload/download internet bottlenecks.</p>
                 </section>
             </div>
         </article>
@@ -171,65 +278,261 @@
         &copy; 2026 Envizion Work. All rights reserved.
     </footer>
 
-    <!-- App Logic Scripts -->
+    <!-- Multithreaded Web Worker Code -->
+    <script id="worker-script" type="javascript/worker">
+        self.onmessage = function(e) {
+            const { id, buffer, w, h, tolerancePercent, featherAmount, seedPoint } = e.data;
+            const data = new Uint8ClampedArray(buffer); // Reconstruct array from ArrayBuffer
+
+            const mappedTol = (tolerancePercent / 100) * 442;
+            const tolSq = mappedTol * mappedTol;
+
+            const queue = new Int32Array(w * h);
+            const visited = new Uint8Array(w * h);
+            let head = 0, tail = 0;
+            let tR = 0, tG = 0, tB = 0;
+
+            if (seedPoint) {
+                const seedX = Math.min(w - 1, Math.max(0, Math.floor(seedPoint.x * w)));
+                const seedY = Math.min(h - 1, Math.max(0, Math.floor(seedPoint.y * h)));
+                const seedIdx = seedY * w + seedX;
+                tR = data[seedIdx * 4];
+                tG = data[seedIdx * 4 + 1];
+                tB = data[seedIdx * 4 + 2];
+                queue[tail++] = seedIdx;
+                visited[seedIdx] = 1;
+            } else {
+                tR = data[0]; tG = data[1]; tB = data[2];
+                // Grab edges
+                for (let x = 0; x < w; x++) { queue[tail++] = x; queue[tail++] = (h - 1) * w + x; }
+                for (let y = 1; y < h - 1; y++) { queue[tail++] = y * w; queue[tail++] = y * w + w - 1; }
+                for (let i = 0; i < tail; i++) { visited[queue[i]] = 1; }
+            }
+
+            // Flood fill
+            while (head < tail) {
+                const idx = queue[head++];
+                const pIdx = idx * 4;
+                const r = data[pIdx], g = data[pIdx + 1], b = data[pIdx + 2];
+                const distSq = (r - tR)**2 + (g - tG)**2 + (b - tB)**2;
+
+                if (distSq <= tolSq) {
+                    data[pIdx + 3] = 0; // Set Alpha to 0
+                    const x = idx % w, y = Math.floor(idx / w);
+                    if (x > 0 && !visited[idx - 1]) { visited[idx - 1] = 1; queue[tail++] = idx - 1; }
+                    if (x < w - 1 && !visited[idx + 1]) { visited[idx + 1] = 1; queue[tail++] = idx + 1; }
+                    if (y > 0 && !visited[idx - w]) { visited[idx - w] = 1; queue[tail++] = idx - w; }
+                    if (y < h - 1 && !visited[idx + w]) { visited[idx + w] = 1; queue[tail++] = idx + w; }
+                }
+            }
+
+            // Fast Box Blur Feathering
+            if (featherAmount > 0) {
+                for (let f = 0; f < featherAmount; f++) {
+                    const outAlpha = new Uint8Array(w * h);
+                    for (let y = 0; y < h; y++) {
+                        for (let x = 0; x < w; x++) {
+                            const idx = (y * w + x) * 4;
+                            if (y === 0 || x === 0 || y === h - 1 || x === w - 1) {
+                                outAlpha[y * w + x] = data[idx + 3]; continue;
+                            }
+                            let sum = data[idx - 4 + 3] + data[idx + 4 + 3] + data[idx - w * 4 + 3] + data[idx + w * 4 + 3] + (data[idx + 3] * 4);
+                            outAlpha[y * w + x] = sum / 8;
+                        }
+                    }
+                    for (let i = 0; i < w * h; i++) { data[i * 4 + 3] = outAlpha[i]; }
+                }
+            }
+
+            // Send processed buffer back to main thread via fast transfer
+            self.postMessage({ id, buffer: data.buffer, w, h }, [data.buffer]);
+        };
+    </script>
+
+    <!-- Application Logic -->
     <script>
-        // Application State
+        // Setup Inline Web Worker
+        const workerBlob = new Blob([document.getElementById('worker-script').textContent], { type: "text/javascript" });
+        const workerUrl = window.URL.createObjectURL(workerBlob);
+        const bgWorker = new Worker(workerUrl);
+
+        // State Management
         let images = [];
-        let tolerance = 10;
-        let feather = 2;
-        let isProcessingQueue = false;
+        let isProcessingAlphaQueue = false;
+        let isProcessingRenderQueue = false;
+        
+        // Settings State
+        const settings = {
+            tolerance: 10,
+            feather: 2,
+            bgColor: 'transparent',
+            bgHex: '#ffffff', // Used if Custom is selected via input color
+            shadowEnabled: false,
+            shadowBlur: 15,
+            format: 'png', // png or jpeg
+            jpegQuality: 0.9,
+            size: 'original', // original, 1080, 800
+            prefix: ''
+        };
 
         // DOM Elements
-        const uploadContainer = document.getElementById('upload-container');
-        const workspace = document.getElementById('workspace');
-        const fileInput = document.getElementById('file-input');
-        const addMoreInput = document.getElementById('add-more-input');
-        const imageGrid = document.getElementById('image-grid');
-        const addMoreCard = document.getElementById('add-more-card');
-        
-        const toleranceSlider = document.getElementById('tolerance-slider');
-        const featherSlider = document.getElementById('feather-slider');
-        const toleranceVal = document.getElementById('tolerance-val');
-        const featherVal = document.getElementById('feather-val');
-        
-        const clearBtn = document.getElementById('clear-btn');
-        const downloadZipBtn = document.getElementById('download-zip-btn');
+        const DOM = {
+            uploadContainer: document.getElementById('upload-container'),
+            workspace: document.getElementById('workspace'),
+            fileInput: document.getElementById('file-input'),
+            addMoreInput: document.getElementById('add-more-input'),
+            imageGrid: document.getElementById('image-grid'),
+            addMoreCard: document.getElementById('add-more-card'),
+            clearBtn: document.getElementById('clear-btn'),
+            downloadZipBtn: document.getElementById('download-zip-btn'),
+            progressContainer: document.getElementById('progress-container'),
+            progressBar: document.getElementById('progress-bar'),
+            // Modals
+            modal: document.getElementById('compare-modal'),
+            modalContent: document.getElementById('compare-modal-content'),
+            modalClose: document.getElementById('close-modal-btn'),
+            compOrig: document.getElementById('compare-original'),
+            compProc: document.getElementById('compare-processed'),
+            compSlider: document.getElementById('compare-slider'),
+            compLine: document.getElementById('compare-line'),
+        };
 
-        // Drag and Drop Listeners
-        uploadContainer.addEventListener('click', () => fileInput.click());
-        uploadContainer.addEventListener('dragover', (e) => e.preventDefault());
-        uploadContainer.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
-        });
-        
-        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
-        addMoreInput.addEventListener('change', (e) => handleFiles(e.target.files));
+        // Initialize Listeners
+        function initListeners() {
+            // Drag Drop
+            DOM.uploadContainer.addEventListener('click', () => DOM.fileInput.click());
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evt => {
+                DOM.uploadContainer.addEventListener(evt, e => e.preventDefault());
+            });
+            DOM.uploadContainer.addEventListener('drop', e => {
+                if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+            });
+            DOM.fileInput.addEventListener('change', e => handleFiles(e.target.files));
+            DOM.addMoreInput.addEventListener('change', e => handleFiles(e.target.files));
+            DOM.clearBtn.addEventListener('click', clearAll);
+            DOM.downloadZipBtn.addEventListener('click', downloadZip);
 
-        // Slider Listeners with simple debounce
-        let debounceTimer;
-        toleranceSlider.addEventListener('input', (e) => {
-            tolerance = parseInt(e.target.value);
-            toleranceVal.textContent = tolerance + '%';
-            queueReprocessing();
-        });
+            // Settings Listeners
+            document.getElementById('tolerance-slider').addEventListener('input', (e) => {
+                settings.tolerance = parseInt(e.target.value);
+                document.getElementById('tolerance-val').textContent = settings.tolerance + '%';
+                triggerPhase1(); // Needs full re-extraction
+            });
 
-        featherSlider.addEventListener('input', (e) => {
-            feather = parseInt(e.target.value);
-            featherVal.textContent = feather + 'px';
-            queueReprocessing();
-        });
+            document.getElementById('feather-slider').addEventListener('input', (e) => {
+                settings.feather = parseInt(e.target.value);
+                document.getElementById('feather-val').textContent = settings.feather + 'px';
+                triggerPhase1(); // Needs full re-extraction
+            });
 
-        // Button Listeners
-        clearBtn.addEventListener('click', () => {
-            images = [];
-            renderGrid();
-            updateUI();
-        });
+            // BG Color Buttons
+            const bgBtns = document.querySelectorAll('.bg-btn');
+            const customBgInput = document.getElementById('custom-bg-color');
+            
+            function updateBgSelection(selectedBtn) {
+                bgBtns.forEach(b => {
+                    b.classList.remove('ring-2', 'ring-blue-500', 'ring-offset-1');
+                    b.classList.add('border-gray-300');
+                });
+                selectedBtn.classList.add('ring-2', 'ring-blue-500', 'ring-offset-1');
+                selectedBtn.classList.remove('border-gray-300');
+            }
 
-        downloadZipBtn.addEventListener('click', downloadZip);
+            bgBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    settings.bgColor = e.target.dataset.bg;
+                    updateBgSelection(e.target);
+                    checkFormatCompatibility();
+                    triggerPhase2(); // Only needs re-render
+                });
+            });
 
-        // Core Functions
+            customBgInput.addEventListener('input', (e) => {
+                settings.bgColor = e.target.value;
+                settings.bgHex = e.target.value;
+                updateBgSelection(customBgInput.parentElement);
+                checkFormatCompatibility();
+                triggerPhase2();
+            });
+
+            // Shadow
+            const shadowToggle = document.getElementById('shadow-toggle');
+            const shadowSlider = document.getElementById('shadow-slider');
+            shadowToggle.addEventListener('change', (e) => {
+                settings.shadowEnabled = e.target.checked;
+                shadowSlider.disabled = !settings.shadowEnabled;
+                shadowSlider.classList.toggle('opacity-50', !settings.shadowEnabled);
+                triggerPhase2();
+            });
+            shadowSlider.addEventListener('input', (e) => {
+                settings.shadowBlur = parseInt(e.target.value);
+                triggerPhase2();
+            });
+
+            // Format & Size
+            const formatSelect = document.getElementById('format-select');
+            const qualityContainer = document.getElementById('quality-container');
+            const qualitySlider = document.getElementById('quality-slider');
+            
+            formatSelect.addEventListener('change', (e) => {
+                settings.format = e.target.value;
+                qualityContainer.classList.toggle('hidden', settings.format !== 'jpeg');
+                checkFormatCompatibility();
+                triggerPhase2();
+            });
+
+            qualitySlider.addEventListener('input', (e) => {
+                settings.jpegQuality = parseInt(e.target.value) / 100;
+                document.getElementById('quality-val').textContent = e.target.value + '%';
+                triggerPhase2();
+            });
+
+            document.getElementById('size-select').addEventListener('change', (e) => {
+                settings.size = e.target.value;
+                triggerPhase2();
+            });
+
+            document.getElementById('file-prefix').addEventListener('input', (e) => {
+                settings.prefix = e.target.value;
+            });
+
+            // Comparison Modal Logic
+            DOM.modalClose.addEventListener('click', closeModal);
+            DOM.compSlider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                DOM.compProc.style.clipPath = `polygon(0 0, ${val}% 0, ${val}% 100%, 0% 100%)`;
+                DOM.compLine.style.left = `${val}%`;
+            });
+        }
+
+        function checkFormatCompatibility() {
+            // JPEG doesn't support transparency. If JPEG & transparent BG selected, warn/force white visually on render.
+            if (settings.format === 'jpeg' && settings.bgColor === 'transparent') {
+                // Background defaults to black on jpeg conversion in canvas natively, but we will force white in renderer for safety
+            }
+        }
+
+        // Debouncers
+        let phase1Timeout;
+        function triggerPhase1() {
+            clearTimeout(phase1Timeout);
+            phase1Timeout = setTimeout(() => {
+                images.forEach(img => { if(img.status !== 'processing_alpha') img.status = 'pending_alpha'; });
+                updateUI();
+                processAlphaQueue();
+            }, 400);
+        }
+
+        let phase2Timeout;
+        function triggerPhase2() {
+            clearTimeout(phase2Timeout);
+            phase2Timeout = setTimeout(() => {
+                images.forEach(img => { if(img.status === 'done') img.status = 'pending_render'; });
+                updateUI();
+                processRenderQueue();
+            }, 200);
+        }
+
         function handleFiles(files) {
             const newFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
             if (newFiles.length === 0) return;
@@ -238,50 +541,66 @@
                 images.push({
                     id: crypto.randomUUID(),
                     file: file,
-                    originalUrl: URL.createObjectURL(file), // blob url
-                    processedUrl: null, // finished base64
-                    status: 'pending', // pending, processing, done, error
-                    seedPoint: null // targeted pixel coordinate override
+                    originalUrl: URL.createObjectURL(file), // base
+                    alphaDataUrl: null, // intermediate transparent image
+                    processedUrl: null, // final customized image
+                    status: 'pending_alpha', // pending_alpha, processing_alpha, pending_render, done, error
+                    seedPoint: null,
+                    w: 0, h: 0
                 });
             });
 
             updateUI();
-            renderGrid();
-            processQueue();
+            processAlphaQueue();
+        }
+
+        function clearAll() {
+            images = [];
+            DOM.progressContainer.classList.add('hidden');
+            updateUI();
         }
 
         function updateUI() {
             if (images.length === 0) {
-                uploadContainer.classList.remove('hidden');
-                workspace.classList.add('hidden');
+                DOM.uploadContainer.classList.remove('hidden');
+                DOM.workspace.classList.add('hidden');
             } else {
-                uploadContainer.classList.add('hidden');
-                workspace.classList.remove('hidden');
+                DOM.uploadContainer.classList.add('hidden');
+                DOM.workspace.classList.remove('hidden');
             }
 
+            const total = images.length;
             const doneCount = images.filter(i => i.status === 'done').length;
-            const pendingCount = images.filter(i => i.status === 'pending' || i.status === 'processing').length;
+            const pendingCount = total - doneCount;
+
+            // Progress Bar
+            if (total > 0) {
+                DOM.progressContainer.classList.remove('hidden');
+                const percent = Math.round((doneCount / total) * 100);
+                DOM.progressBar.style.width = `${percent}%`;
+            }
 
             if (doneCount > 0 && pendingCount === 0) {
-                downloadZipBtn.disabled = false;
-                downloadZipBtn.innerHTML = `Zip & Download (${doneCount})`;
+                DOM.downloadZipBtn.disabled = false;
+                DOM.downloadZipBtn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> Download ZIP (${doneCount})`;
             } else {
-                downloadZipBtn.disabled = true;
-                downloadZipBtn.innerHTML = pendingCount > 0 ? `Processing...` : `Zip & Download`;
+                DOM.downloadZipBtn.disabled = true;
+                DOM.downloadZipBtn.innerHTML = pendingCount > 0 ? `Processing (${pendingCount} left)...` : `Download ZIP`;
             }
+
+            renderGrid();
         }
 
         function renderGrid() {
-            // Remove old cards (protect the "add more" button)
-            const cards = imageGrid.querySelectorAll('.image-card');
+            const cards = DOM.imageGrid.querySelectorAll('.image-card');
             cards.forEach(c => c.remove());
 
             images.forEach(img => {
                 const card = document.createElement('div');
-                card.className = "image-card bg-white p-3 rounded-2xl border border-gray-200 shadow-sm flex flex-col relative group";
+                card.className = "image-card bg-white p-3 rounded-2xl border border-gray-200 shadow-sm flex flex-col relative group transition-all hover:shadow-md";
                 
                 let contentHTML = '';
-                if (img.processedUrl) {
+                if (img.status === 'done' && img.processedUrl) {
                     contentHTML = `<img src="${img.processedUrl}" class="w-full h-full object-contain pointer-events-none" alt="Processed Output">`;
                 } else if (img.status === 'error') {
                     contentHTML = `<div class="text-red-500 text-xs text-center font-bold">Failed</div>`;
@@ -289,249 +608,326 @@
                     contentHTML = `<div class="text-blue-500 text-xs text-center font-bold animate-pulse">Processing...</div>`;
                 }
 
+                // Determine grid background class based on settings
+                let gridBgClass = settings.bgColor === 'transparent' ? 'bg-checkerboard' : '';
+                let customBgStyle = settings.bgColor !== 'transparent' ? `background-color: ${settings.bgColor};` : '';
+
                 card.innerHTML = `
-                    <button class="absolute -top-2 -right-2 bg-white border border-gray-200 text-gray-500 hover:text-red-500 hover:border-red-200 rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 shadow-sm leading-none" onclick="removeImg('${img.id}')" aria-label="Remove image">&times;</button>
+                    <button class="absolute -top-2 -right-2 bg-white border border-gray-200 text-gray-500 hover:text-red-500 hover:border-red-200 rounded-full w-7 h-7 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-20 shadow-sm" onclick="removeImg('${img.id}')" aria-label="Remove">&times;</button>
                     
-                    <div class="aspect-square relative rounded-xl overflow-hidden bg-checkerboard mb-2 shadow-inner group/target">
+                    <div class="aspect-square relative rounded-xl overflow-hidden ${gridBgClass} mb-3 shadow-inner group/target border border-gray-100" style="${customBgStyle}">
                         <div class="w-full h-full flex flex-col items-center justify-center absolute inset-0 z-0">${contentHTML}</div>
                         
-                        <img src="${img.originalUrl}" class="original-target absolute inset-0 w-full h-full object-contain cursor-crosshair transition-opacity ${img.processedUrl ? 'opacity-0 group-hover/target:opacity-100' : 'opacity-100'} z-10" title="Click to target a specific background color" alt="Original Upload">
+                        <img src="${img.originalUrl}" class="original-target absolute inset-0 w-full h-full object-contain cursor-crosshair transition-opacity ${img.processedUrl ? 'opacity-0 group-hover/target:opacity-40' : 'opacity-100'} z-10" title="Click anywhere to target a custom background color" alt="Original">
                         
-                        ${img.seedPoint ? `<div class="absolute top-1 left-1 bg-gray-900 border border-white text-white text-[9px] px-1 rounded z-20 pointer-events-none">Targeted Color</div>` : ''}
+                        ${img.seedPoint ? `<div class="absolute top-1 left-1 bg-gray-900/80 backdrop-blur border border-white/20 text-white text-[9px] px-1.5 py-0.5 rounded z-20 pointer-events-none">Color Targeted</div>` : ''}
+                        
+                        ${img.status === 'done' ? `
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/target:opacity-100 transition-opacity flex items-center justify-center z-10">
+                                <button class="bg-white/20 hover:bg-white/40 backdrop-blur-md text-white font-bold text-xs py-1.5 px-3 rounded-full transition-colors flex items-center gap-1 shadow-lg" onclick="openModal('${img.id}')">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> Compare
+                                </button>
+                            </div>
+                        ` : ''}
                     </div>
 
                     <div class="flex items-center justify-between px-1 mt-auto">
-                        <p class="text-xs text-gray-500 truncate font-medium max-w-[70%]" title="${img.file.name}">${img.file.name}</p>
-                        ${img.processedUrl ? `<button class="text-blue-600 hover:text-blue-800 text-[10px] font-bold px-2 py-1 rounded bg-blue-50 hover:bg-blue-100 transition-colors uppercase" onclick="downloadSingle('${img.id}')">Save</button>` : ''}
+                        <p class="text-[11px] text-gray-500 truncate font-medium max-w-[70%]" title="${img.file.name}">${img.file.name}</p>
+                        ${img.status === 'done' ? `<button class="text-blue-600 hover:text-blue-800 text-[10px] font-bold px-2 py-1 rounded bg-blue-50 hover:bg-blue-100 transition-colors uppercase" onclick="downloadSingle('${img.id}')">Save</button>` : ''}
                     </div>
                 `;
 
-                // Handle picking a custom point over the image
+                // Seed picker logic
                 const targetImg = card.querySelector('.original-target');
                 targetImg.addEventListener('click', (e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     const x = (e.clientX - rect.left) / rect.width;
                     const y = (e.clientY - rect.top) / rect.height;
-                    
                     const reference = images.find(i => i.id === img.id);
                     if(reference) {
                         reference.seedPoint = {x, y};
-                        reference.status = 'pending';
-                        renderGrid();
-                        updateUI();
-                        processQueue();
+                        triggerPhase1();
                     }
                 });
 
-                imageGrid.insertBefore(card, addMoreCard);
+                DOM.imageGrid.insertBefore(card, DOM.addMoreCard);
             });
         }
 
+        // --- Worker Communication Handlers ---
+        
+        bgWorker.onmessage = function(e) {
+            const { id, buffer, w, h } = e.data;
+            const img = images.find(i => i.id === id);
+            
+            if (img) {
+                // Reconstruct imageData from buffer
+                const arr = new Uint8ClampedArray(buffer);
+                const imageData = new ImageData(arr, w, h);
+                
+                // Temp canvas to get DataUrl
+                const cvs = document.createElement('canvas');
+                cvs.width = w; cvs.height = h;
+                const ctx = cvs.getContext('2d');
+                ctx.putImageData(imageData, 0, 0);
+                
+                img.alphaDataUrl = cvs.toDataURL('image/png');
+                img.status = 'pending_render';
+                img.w = w;
+                img.h = h;
+            }
+            
+            isProcessingAlphaQueue = false;
+            processAlphaQueue(); // Next alpha
+            processRenderQueue(); // Trigger render for this one
+        };
+
+        // --- PHASE 1: Alpha Extraction ---
+        async function processAlphaQueue() {
+            if (isProcessingAlphaQueue) return;
+            const nextIdx = images.findIndex(img => img.status === 'pending_alpha');
+            if (nextIdx === -1) {
+                updateUI();
+                return;
+            }
+
+            isProcessingAlphaQueue = true;
+            const img = images[nextIdx];
+            img.status = 'processing_alpha';
+            updateUI();
+
+            try {
+                const imgElement = new Image();
+                imgElement.crossOrigin = "Anonymous";
+                
+                await new Promise((resolve, reject) => {
+                    imgElement.onload = resolve;
+                    imgElement.onerror = reject;
+                    imgElement.src = img.originalUrl;
+                });
+
+                const cvs = document.createElement("canvas");
+                let w = imgElement.width, h = imgElement.height;
+                const MAX_RES = 1600;
+                if (w > MAX_RES || h > MAX_RES) {
+                    const ratio = Math.min(MAX_RES / w, MAX_RES / h);
+                    w = Math.floor(w * ratio);
+                    h = Math.floor(h * ratio);
+                }
+                cvs.width = w; cvs.height = h;
+
+                const ctx = cvs.getContext("2d");
+                ctx.drawImage(imgElement, 0, 0, w, h);
+                
+                // Get buffer and send to worker
+                const imgData = ctx.getImageData(0, 0, w, h);
+                bgWorker.postMessage({
+                    id: img.id,
+                    buffer: imgData.data.buffer,
+                    w: w, h: h,
+                    tolerancePercent: settings.tolerance,
+                    featherAmount: settings.feather,
+                    seedPoint: img.seedPoint
+                }, [imgData.data.buffer]); // Transfer buffer for performance
+
+            } catch (err) {
+                console.error("Alpha extract error:", err);
+                img.status = 'error';
+                isProcessingAlphaQueue = false;
+                processAlphaQueue();
+            }
+        }
+
+        // --- PHASE 2: Visual Rendering ---
+        async function processRenderQueue() {
+            if (isProcessingRenderQueue) return;
+            const nextIdx = images.findIndex(img => img.status === 'pending_render');
+            if (nextIdx === -1) {
+                updateUI();
+                return;
+            }
+
+            isProcessingRenderQueue = true;
+            const img = images[nextIdx];
+
+            try {
+                const alphaImg = new Image();
+                await new Promise((resolve, reject) => {
+                    alphaImg.onload = resolve;
+                    alphaImg.onerror = reject;
+                    alphaImg.src = img.alphaDataUrl;
+                });
+
+                const cvs = document.createElement("canvas");
+                const ctx = cvs.getContext("2d");
+
+                // Determine Output Size
+                let outW = img.w, outH = img.h;
+                if (settings.size !== 'original') {
+                    outW = parseInt(settings.size);
+                    outH = parseInt(settings.size);
+                }
+                cvs.width = outW; cvs.height = outH;
+
+                // 1. Draw Background
+                if (settings.bgColor !== 'transparent') {
+                    ctx.fillStyle = settings.bgColor;
+                    ctx.fillRect(0, 0, outW, outH);
+                } else if (settings.format === 'jpeg') {
+                    // Force white background for JPEG if transparent is selected to prevent pure black
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, outW, outH);
+                }
+
+                // Calculate drawing dimensions (Contain logic if resized)
+                let drawW = img.w, drawH = img.h;
+                let drawX = 0, drawY = 0;
+
+                if (settings.size !== 'original') {
+                    const ratio = Math.min(outW / img.w, outH / img.h) * 0.9; // 90% contain for padding
+                    drawW = img.w * ratio;
+                    drawH = img.h * ratio;
+                    drawX = (outW - drawW) / 2;
+                    drawY = (outH - drawH) / 2;
+                }
+
+                // 2. Apply Shadow Settings
+                if (settings.shadowEnabled) {
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+                    ctx.shadowBlur = settings.shadowBlur;
+                    ctx.shadowOffsetX = settings.shadowBlur / 3;
+                    ctx.shadowOffsetY = settings.shadowBlur / 3;
+                }
+
+                // 3. Draw Alpha Image
+                ctx.drawImage(alphaImg, drawX, drawY, drawW, drawH);
+                
+                // Clear shadow for any subsequent operations
+                ctx.shadowColor = 'transparent';
+
+                // 4. Export
+                const mimeType = settings.format === 'jpeg' ? 'image/jpeg' : 'image/png';
+                img.processedUrl = cvs.toDataURL(mimeType, settings.jpegQuality);
+                img.status = 'done';
+
+            } catch (err) {
+                console.error("Render error:", err);
+                img.status = 'error';
+            } finally {
+                isProcessingRenderQueue = false;
+                processRenderQueue(); // Loop
+            }
+        }
+
+        // --- Utilities ---
         window.removeImg = function(id) {
             images = images.filter(img => img.id !== id);
-            renderGrid();
             updateUI();
         }
 
+        function generateFileName(originalName, index) {
+            const ext = settings.format === 'jpeg' ? '.jpg' : '.png';
+            if (settings.prefix.trim() !== '') {
+                // E.g., Product_1.png
+                return `${settings.prefix.trim()}${index + 1}${ext}`;
+            }
+            // Default: originalName-nobg.png
+            return originalName.replace(/\.[^/.]+$/, "") + `-processed${ext}`;
+        }
+
         window.downloadSingle = function(id) {
-            const img = images.find(i => i.id === id);
+            const index = images.findIndex(i => i.id === id);
+            const img = images[index];
             if(img && img.processedUrl) {
                 const a = document.createElement("a");
                 a.href = img.processedUrl;
-                a.download = img.file.name.replace(/\.[^/.]+$/, "") + `-nobg.png`;
+                a.download = generateFileName(img.file.name, index);
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
             }
         }
 
-        function queueReprocessing() {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                images.forEach(img => {
-                    if (img.status !== 'processing') {
-                        img.status = 'pending';
-                    }
-                });
-                renderGrid();
-                updateUI();
-                processQueue();
-            }, 300);
-        }
-
-        // Flood Fill / Process logic Loop
-        async function processQueue() {
-            if (isProcessingQueue) return;
-            
-            const nextIdx = images.findIndex(img => img.status === 'pending');
-            if (nextIdx === -1) return;
-
-            isProcessingQueue = true;
-            const img = images[nextIdx];
-            img.status = 'processing';
-            renderGrid();
-            updateUI();
-            
-            // Allow browser an instant to render the "processing" state
-            await new Promise(r => setTimeout(r, 10));
-
-            try {
-                img.processedUrl = await doBackgroundRemovalLocal(img.originalUrl, tolerance, feather, img.seedPoint);
-                img.status = 'done';
-            } catch (err) {
-                console.error(err);
-                img.status = 'error';
-            } finally {
-                isProcessingQueue = false;
-                renderGrid();
-                updateUI();
-                processQueue(); 
-            }
-        }
-
         async function downloadZip() {
+            DOM.downloadZipBtn.disabled = true;
+            DOM.downloadZipBtn.innerText = "Zipping...";
+            
             const zip = new JSZip();
             let addedFiles = 0;
 
-            images.forEach((img) => {
+            images.forEach((img, index) => {
                 if (img.status === 'done' && img.processedUrl) {
                     addedFiles++;
                     const base64Data = img.processedUrl.split(',')[1];
-                    const fileName = img.file.name.replace(/\.[^/.]+$/, "") + `-nobg.png`;
+                    const fileName = generateFileName(img.file.name, index);
                     zip.file(fileName, base64Data, { base64: true });
                 }
             });
 
-            if (addedFiles === 0) return;
+            if (addedFiles === 0) {
+                updateUI();
+                return;
+            }
 
-            const content = await zip.generateAsync({ type: "blob" });
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(content);
-            a.download = "bg-removed-images.zip";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            try {
+                const content = await zip.generateAsync({ type: "blob" });
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(content);
+                a.download = settings.prefix ? `${settings.prefix.trim()}batch.zip` : "auto-remove-batch.zip";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } catch (e) {
+                console.error("Zip Error", e);
+                alert("Error generating zip file.");
+            } finally {
+                updateUI();
+            }
         }
 
-        // Vanilla Background Flood Fill Algorithm 
-        function doBackgroundRemovalLocal(imgUrl, tolerancePercent, featherAmount, seedPoint) {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                img.crossOrigin = "Anonymous";
-                
-                img.onload = () => {
-                    const cvs = document.createElement("canvas");
-                    let w = img.width;
-                    let h = img.height;
+        // Modal Logic
+        window.openModal = function(id) {
+            const img = images.find(i => i.id === id);
+            if (!img) return;
 
-                    // Cap maximum dimension to prevent browser crashes on local memory
-                    const MAX_RES = 1600;
-                    if (w > MAX_RES) {
-                        h = Math.floor(h * (MAX_RES / w));
-                        w = MAX_RES;
-                    }
-                    cvs.width = w;
-                    cvs.height = h;
+            DOM.compOrig.src = img.originalUrl;
+            DOM.compProc.src = img.processedUrl;
+            
+            // Set dynamic background color based on settings
+            const container = document.getElementById('compare-container');
+            if(settings.bgColor === 'transparent') {
+                container.style.backgroundColor = '';
+                container.classList.add('bg-checkerboard');
+            } else {
+                container.style.backgroundColor = settings.bgColor;
+                container.classList.remove('bg-checkerboard');
+            }
 
-                    const ctx = cvs.getContext("2d", { willReadFrequently: true });
-                    if (!ctx) return reject(new Error("Unable to create canvas context"));
+            DOM.compSlider.value = 50;
+            DOM.compProc.style.clipPath = `polygon(0 0, 50% 0, 50% 100%, 0% 100%)`;
+            DOM.compLine.style.left = `50%`;
 
-                    ctx.drawImage(img, 0, 0, w, h);
-                    const imgData = ctx.getImageData(0, 0, w, h);
-                    const data = imgData.data;
-
-                    const mappedTol = (tolerancePercent / 100) * 442;
-                    const tolSq = mappedTol * mappedTol;
-
-                    const queue = new Int32Array(w * h);
-                    const visited = new Uint8Array(w * h);
-                    let head = 0;
-                    let tail = 0;
-
-                    let tR = 0, tG = 0, tB = 0;
-
-                    if (seedPoint) {
-                        const seedX = Math.min(w - 1, Math.max(0, Math.floor(seedPoint.x * w)));
-                        const seedY = Math.min(h - 1, Math.max(0, Math.floor(seedPoint.y * h)));
-                        const seedIdx = seedY * w + seedX;
-                        tR = data[seedIdx * 4];
-                        tG = data[seedIdx * 4 + 1];
-                        tB = data[seedIdx * 4 + 2];
-                        queue[tail++] = seedIdx;
-                        visited[seedIdx] = 1;
-                    } else {
-                        // Standard auto edge grabbing
-                        tR = data[0]; tG = data[1]; tB = data[2];
-                        for (let x = 0; x < w; x++) {
-                            queue[tail++] = x;
-                            queue[tail++] = (h - 1) * w + x;
-                        }
-                        for (let y = 1; y < h - 1; y++) {
-                            queue[tail++] = y * w;
-                            queue[tail++] = y * w + w - 1;
-                        }
-                        for (let i = 0; i < tail; i++) {
-                            visited[queue[i]] = 1;
-                        }
-                    }
-
-                    // Flood fill
-                    while (head < tail) {
-                        const idx = queue[head++];
-                        const pIdx = idx * 4;
-
-                        const r = data[pIdx];
-                        const g = data[pIdx + 1];
-                        const b = data[pIdx + 2];
-
-                        const distSq = (r - tR) * (r - tR) + (g - tG) * (g - tG) + (b - tB) * (b - tB);
-
-                        if (distSq <= tolSq) {
-                            data[pIdx + 3] = 0; // Alpha 0
-                            const x = idx % w;
-                            const y = Math.floor(idx / w);
-                            
-                            if (x > 0 && !visited[idx - 1]) { visited[idx - 1] = 1; queue[tail++] = idx - 1; }
-                            if (x < w - 1 && !visited[idx + 1]) { visited[idx + 1] = 1; queue[tail++] = idx + 1; }
-                            if (y > 0 && !visited[idx - w]) { visited[idx - w] = 1; queue[tail++] = idx - w; }
-                            if (y < h - 1 && !visited[idx + w]) { visited[idx + w] = 1; queue[tail++] = idx + w; }
-                        }
-                    }
-
-                    // Quick Box blur for alpha feathering
-                    if (featherAmount > 0) {
-                        for (let f = 0; f < featherAmount; f++) {
-                            const outAlpha = new Uint8Array(w * h);
-                            for (let y = 0; y < h; y++) {
-                                for (let x = 0; x < w; x++) {
-                                    const idx = (y * w + x) * 4;
-                                    if (y === 0 || x === 0 || y === h - 1 || x === w - 1) {
-                                        outAlpha[y * w + x] = data[idx + 3];
-                                        continue;
-                                    }
-                                    let sum = 0;
-                                    sum += data[idx - 4 + 3];
-                                    sum += data[idx + 4 + 3];
-                                    sum += data[idx - w * 4 + 3];
-                                    sum += data[idx + w * 4 + 3];
-                                    sum += data[idx + 3] * 4;
-                                    outAlpha[y * w + x] = sum / 8;
-                                }
-                            }
-                            for (let i = 0; i < w * h; i++) {
-                                data[i * 4 + 3] = outAlpha[i];
-                            }
-                        }
-                    }
-
-                    ctx.putImageData(imgData, 0, 0);
-                    resolve(cvs.toDataURL("image/png"));
-                };
-                
-                img.onerror = () => reject(new Error("Image Load Error"));
-                img.src = imgUrl;
-            });
+            DOM.modal.classList.remove('hidden');
+            // Small delay for transition
+            setTimeout(() => {
+                DOM.modal.classList.remove('opacity-0');
+                DOM.modalContent.classList.remove('scale-95');
+            }, 10);
         }
+
+        function closeModal() {
+            DOM.modal.classList.add('opacity-0');
+            DOM.modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                DOM.modal.classList.add('hidden');
+                DOM.compOrig.src = '';
+                DOM.compProc.src = '';
+            }, 300);
+        }
+
+        // Init
+        initListeners();
+
     </script>
 </body>
 </html>
