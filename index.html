@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoRemove Batch Background Remover</title>
     
+    <!-- SEO Meta Tags -->
+    <title>AutoRemove Batch Background Remover - Bulk Image Tool</title>
+    <meta name="description" content="Free, 100% client-side batch background remover. Drag and drop multiple images to automatically strip backgrounds locally in your browser. No file uploads, completely private.">
+    <meta name="keywords" content="batch background remover, multiple images background remover, bulk transparent png converter, remove background locally, bulk image background transparent, free background removal tool">
+    <meta name="author" content="Envizion Work">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:title" content="AutoRemove Batch Background Remover">
+    <meta property="og:description" content="Instantly remove backgrounds from multiple images at once. 100% private, local browser processing.">
+    <meta property="og:type" content="website">
+
     <!-- Tailwind CSS for Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -37,7 +48,7 @@
     <header class="bg-white border-b border-gray-200 sticky top-0 z-20 p-4 shadow-sm">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
             <h1 class="font-bold text-xl tracking-tight text-blue-600">AutoRemove Batch</h1>
-            <span class="text-xs font-semibold bg-gray-100 text-gray-600 px-2 py-1 rounded-full uppercase tracking-wider">
+            <span class="text-xs font-semibold bg-gray-100 text-gray-600 px-2 py-1 rounded-full uppercase tracking-wider" title="Your images never leave your computer">
                 100% Client-Side
             </span>
         </div>
@@ -47,7 +58,7 @@
         
         <!-- Ad Banner 1 (Slot: 3561821198) -->
         <div class="mb-8 ad-container min-h-[100px]">
-            <span class="text-gray-400 text-sm absolute z-0 pointer-events-none">Advertisement Slot</span>
+            <span class="text-gray-400 text-sm absolute z-0 pointer-events-none">Advertisement</span>
             <ins class="adsbygoogle z-10 w-full"
                  style="display:block"
                  data-ad-client="ca-pub-5812524294035974"
@@ -61,11 +72,11 @@
 
         <!-- Initial Upload Area -->
         <div id="upload-container" class="border-2 border-dashed border-gray-300 rounded-3xl p-16 flex flex-col items-center justify-center bg-white cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
-            <h2 class="text-xl font-semibold mb-2">Upload images in bulk</h2>
-            <p class="text-gray-500 text-center mb-6 max-w-sm">
-                Drag and drop multiple images here, or click to browse. We'll automatically remove backgrounds locally.
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Free Batch Background Remover</h2>
+            <p class="text-gray-500 text-center mb-6 max-w-md">
+                Drag and drop multiple images here, or click to browse. We automatically process bulk images locally in your browser.
             </p>
-            <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2.5 rounded-full transition-colors">Select Images</button>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3 rounded-full transition-colors shadow-sm">Select Images to Process</button>
             <input type="file" multiple accept="image/*" id="file-input" class="hidden">
         </div>
 
@@ -78,7 +89,7 @@
                     <!-- Tolerance Control -->
                     <div class="flex-1 max-w-xs">
                         <div class="flex justify-between mb-1.5">
-                            <label class="font-medium text-sm text-gray-700">Tolerance</label>
+                            <label class="font-medium text-sm text-gray-700">Edge Tolerance</label>
                             <span id="tolerance-val" class="text-sm border-gray-200 border bg-gray-50 px-1 rounded text-gray-600">10%</span>
                         </div>
                         <input type="range" id="tolerance-slider" min="0" max="100" value="10" class="w-full accent-blue-600 h-2 bg-gray-200 rounded-lg cursor-pointer">
@@ -87,7 +98,7 @@
                     <!-- Feathering Control -->
                     <div class="flex-1 max-w-xs">
                         <div class="flex justify-between mb-1.5">
-                            <label class="font-medium text-sm text-gray-700">Feathering</label>
+                            <label class="font-medium text-sm text-gray-700">Feathering (Smoothing)</label>
                             <span id="feather-val" class="text-sm border-gray-200 border bg-gray-50 px-1 rounded text-gray-600">2px</span>
                         </div>
                         <input type="range" id="feather-slider" min="0" max="10" value="2" class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-blue-600">
@@ -113,10 +124,36 @@
                 </label>
             </div>
         </div>
+
+        <!-- SEO Rich Content Section -->
+        <article class="mt-16 bg-white rounded-3xl p-8 shadow-sm border border-gray-100 max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">The Fastest Multiple Images Background Remover</h2>
+            
+            <div class="space-y-6 text-gray-600 leading-relaxed">
+                <section>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">How to Process Bulk Images</h3>
+                    <p>Removing backgrounds from dozens of photos doesn't have to take hours. With our batch background remover, you simply highlight all your files, drag them into the upload zone, and watch the tool automatically convert them into transparent PNGs. Use the tolerance sliders to adjust how aggressively the background is removed, and the feathering tool to smooth out rough pixel edges on bulk jobs.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">100% Secure & Client-Side Local Processing</h3>
+                    <p>Unlike other cloud-based tools that force you to upload sensitive product photos or personal images to their servers, our tool works completely locally inside your browser. No images are ever uploaded, ensuring strict data privacy and allowing you to remove backgrounds from multiple images instantly without waiting for slow internet upload speeds.</p>
+                </section>
+
+                <section>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Frequently Asked Questions</h3>
+                    <ul class="space-y-3">
+                        <li><strong>How many images can I process at once?</strong> You can upload as many images as your computer's memory can handle. For best performance, we recommend batch processing 20-50 images at a time.</li>
+                        <li><strong>How do I download the results?</strong> Once processing finishes, simply click "Zip & Download" to get a single compressed file containing all your new transparent PNG graphics.</li>
+                        <li><strong>What if the tool removes the wrong part of the image?</strong> Click exactly on the color or area of the original background you want to remove. The algorithm will target that specific pixel color as the seed point for the entire batch.</li>
+                    </ul>
+                </section>
+            </div>
+        </article>
         
         <!-- Ad Banner 2 (Slot: 1187710073) -->
         <div class="mt-12 ad-container min-h-[250px]">
-            <span class="text-gray-400 text-sm absolute z-0 pointer-events-none">Advertisement Slot</span>
+            <span class="text-gray-400 text-sm absolute z-0 pointer-events-none">Advertisement</span>
             <ins class="adsbygoogle z-10 w-full"
                  style="display:block"
                  data-ad-client="ca-pub-5812524294035974"
@@ -130,6 +167,11 @@
 
     </main>
 
+    <footer class="text-center text-gray-400 text-sm py-6">
+        &copy; 2026 Envizion Work. All rights reserved.
+    </footer>
+
+    <!-- App Logic Scripts -->
     <script>
         // Application State
         let images = [];
@@ -240,7 +282,7 @@
                 
                 let contentHTML = '';
                 if (img.processedUrl) {
-                    contentHTML = `<img src="${img.processedUrl}" class="w-full h-full object-contain pointer-events-none">`;
+                    contentHTML = `<img src="${img.processedUrl}" class="w-full h-full object-contain pointer-events-none" alt="Processed Output">`;
                 } else if (img.status === 'error') {
                     contentHTML = `<div class="text-red-500 text-xs text-center font-bold">Failed</div>`;
                 } else {
@@ -248,12 +290,12 @@
                 }
 
                 card.innerHTML = `
-                    <button class="absolute -top-2 -right-2 bg-white border border-gray-200 text-gray-500 hover:text-red-500 hover:border-red-200 rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 shadow-sm leading-none" onclick="removeImg('${img.id}')">&times;</button>
+                    <button class="absolute -top-2 -right-2 bg-white border border-gray-200 text-gray-500 hover:text-red-500 hover:border-red-200 rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all z-10 shadow-sm leading-none" onclick="removeImg('${img.id}')" aria-label="Remove image">&times;</button>
                     
                     <div class="aspect-square relative rounded-xl overflow-hidden bg-checkerboard mb-2 shadow-inner group/target">
                         <div class="w-full h-full flex flex-col items-center justify-center absolute inset-0 z-0">${contentHTML}</div>
                         
-                        <img src="${img.originalUrl}" class="original-target absolute inset-0 w-full h-full object-contain cursor-crosshair transition-opacity ${img.processedUrl ? 'opacity-0 group-hover/target:opacity-100' : 'opacity-100'} z-10" title="Click to target a specific background color">
+                        <img src="${img.originalUrl}" class="original-target absolute inset-0 w-full h-full object-contain cursor-crosshair transition-opacity ${img.processedUrl ? 'opacity-0 group-hover/target:opacity-100' : 'opacity-100'} z-10" title="Click to target a specific background color" alt="Original Upload">
                         
                         ${img.seedPoint ? `<div class="absolute top-1 left-1 bg-gray-900 border border-white text-white text-[9px] px-1 rounded z-20 pointer-events-none">Targeted Color</div>` : ''}
                     </div>
